@@ -17,8 +17,21 @@ const routes = [
   { path: '/pricing', name: 'pricing', component: PricingView },
   { path: '/register', name: 'register', component: RegisterView },
   { path: '/login', name: 'login', component: LoginView },
-  { path: '/employees', name: 'employees', component: EmployeesView },
-  { path: '/employees/:id', name: 'employee-detail', component: EmployeeDetailView },
+
+  // 👇 Пример защищённых маршрутов
+  { 
+    path: '/employees', 
+    name: 'employees', 
+    component: EmployeesView, 
+    meta: { requiresAuth: true }  // защищённый маршрут
+  },
+  { 
+    path: '/employees/:id', 
+    name: 'employee-detail', 
+    component: EmployeeDetailView,
+    meta: { requiresAuth: true }  // защищённый маршрут
+  },
+
   { path: '/privacy-policy', name: 'privacy-policy', component: PrivacyPolicyView },
   { path: '/faq', name: 'faq', component: FaqView }
 ]
@@ -28,6 +41,18 @@ const router = createRouter({
   routes,
   scrollBehavior() {
     return { top: 0, behavior: 'smooth' }
+  }
+})
+
+
+// ✅ Проверка авторизации перед переходом
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token') // токен авторизации (или другой флаг входа)
+  if (to.meta.requiresAuth && !token) {
+    console.warn('❌ Нет токена — переход запрещён, перенаправление на /login')
+    next('/login')
+  } else {
+    next()
   }
 })
 
