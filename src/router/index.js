@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import PricingView from '../views/PricingView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import LoginView from '../views/LoginView.vue'
-import EmployeesView from '../views/EmployeesView.vue'
-import EmployeeDetailView from '../views/EmployeeDetailView.vue'
-import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
-import FaqView from '../views/FaqView.vue'
+// ✅ Lazy Loading — динамическая загрузка компонентов
+const HomeView = () => import('../views/HomeView.vue')
+const AboutView = () => import('../views/AboutView.vue')
+const PricingView = () => import('../views/PricingView.vue')
+const RegisterView = () => import('../views/RegisterView.vue')
+const LoginView = () => import('../views/LoginView.vue')
+const EmployeesView = () => import('../views/EmployeesView.vue')
+const EmployeeDetailView = () => import('../views/EmployeeDetailView.vue')
+const PrivacyPolicyView = () => import('../views/PrivacyPolicyView.vue')
+const FaqView = () => import('../views/FaqView.vue')
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
